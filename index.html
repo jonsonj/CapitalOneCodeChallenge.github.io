@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Capital One Coding Challenge</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script type="text/javascript" src="papaparse.min.js"></script>
+	<script type="text/javascript">
+		var cordData = Papa.parse("37.7,37.714,37.728,37.742,37.756,37.77,37.784,37.798,37.812,37.826,37.84 \n -122.52,-122.5,-122.49,-122.47,-122.46,-122.44,-122.42,-122.41,-122.39,-122.38,-122.36").data;
+		var weeklyRevData = Papa.parse("363,363,98,204.49,494.76,454.94,363,562.19,363,363\n215,41.667,93.153,264.34,262.89,249.5,278.47,242.49,288.4,215\n336.82,265.5,377.22,354.88,245.91,234.63,218.81,216.3,259.44,481.6\n325.69,228.6,918.86,186.94,262.5,375.41,263.22,232.73,537.6,370\n356.48,345.74,304.12,325.24,275.29,403.23,260.96,388.1,365.32,336\n315.55,219.37,251.97,187.23,372.9,270.38,228.85,488.81,370.85,301\n333,212.72,580.71,174.22,544.39,342.19,272.1,273.55,261.61,333\n533,533,416.5,533,344.45,443.63,356.15,1104.9,533,533\n263,263,263,263,263,263,263,263,303.33,223.44\n687,687,687,687,687,687,687,687,687,686.6").data;
+		var idealPriceData = Papa.parse("370,205,60,350,199,350,399,450,950,370\n682,150,800,1595,1500,350,345,500,215,682\n350,1450,295,1150,1150,1495,950,2000,350,280\n695,590,8000,2500,1200,4000,1500,1200,800,2276\n1100,520,700,1500,3500,1750,3200,10000,2000,2697\n1850,4000,1100,1000,3050,7500,9996,9999,10000,5388\n3574,895,800,1200,7000,5000,10000,2500,1200,3574\n3517,3517,105,699,2100,2200,6000,9999,3517,3517\n128,128,128,128,128,128,128,128,55,200\n201,201,201,201,201,201,201,201,201,201").data;
+
+		function calcWeekRev(){
+			var lat =  parseFloat(document.getElementById('weeklyLat').value);
+			var long = parseFloat(document.getElementById('weeklyLong').value);
+			var lat_index = -1;
+			var long_index = -1;
+			console.log(lat);
+			for(var i = 0; i < cordData[0].length; i++){
+				if(lat < parseFloat(cordData[0][i]) && i == 0){
+					break;
+				}
+				else if(lat < parseFloat(cordData[0][i])){
+					lat_index = i;
+					break;
+				}
+			}
+
+			for(var i = 0; i < cordData[1].length; i++){
+				if(long < parseFloat(cordData[1][i]) && i == 0){
+					break;
+				}
+				else if(long < parseFloat(cordData[1][i])){
+					long_index = i;
+					break;
+				}
+			}
+
+			if(lat_index == -1 || long_index == -1){
+				document.getElementById("weeklyDecision").innerHTML = "Sorry you entered a invalid value only enter values from " + cordData[0][0] + 
+				" and " + cordData[0][10] + " for latitude and from " + cordData[1][0] + " and " + cordData[1][10] + " for longitude";
+			}
+			else{
+				document.getElementById("weeklyDecision").innerHTML = "Your weekly revenue should be " + weeklyRevData[long_index][lat_index] + " dollars";
+			}
+		}
+
+		function calcIdealPrice(){
+			var lat =  parseFloat(document.getElementById('idealLat').value);
+			var long = parseFloat(document.getElementById('idealLong').value);
+			var lat_index = -1;
+			var long_index = -1;
+			console.log(lat);
+			for(var i = 0; i < cordData[0].length; i++){
+				if(lat < parseFloat(cordData[0][i]) && i == 0){
+					break;
+				}
+				else if(lat < parseFloat(cordData[0][i])){
+					lat_index = i;
+					break;
+				}
+			}
+
+			for(var i = 0; i < cordData[1].length; i++){
+				if(long < parseFloat(cordData[1][i]) && i == 0){
+					break;
+				}
+				else if(long < parseFloat(cordData[1][i])){
+					long_index = i;
+					break;
+				}
+			}
+
+			if(lat_index == -1 || long_index == -1){
+				document.getElementById("idealDecision").innerHTML = "Sorry you entered a invalid value only enter values from " + cordData[0][0] + 
+				" and " + cordData[0][10] + " for latitude and from " + cordData[1][0] + " and " + cordData[1][10] + " for longitude";
+			}
+			else{
+				document.getElementById("idealDecision").innerHTML = "Your ideal price per night " + weeklyRevData[long_index][lat_index] + " dollars";
+			}
+		}
+	</script>
+</head>
+<body>
+
+<header>
+	<h1 style="padding-left: 1em;">
+		<em><strong>Capital One <br> Coding Challenge 2017</strong></em>
+	</h1>
+</header>
+
+<nav>
+	<ul style="list-style-type:none">
+		<li><a href="#WeeklyRev">WRC</a></li>
+   	<li><a href="#IdealPrice">IPC</a></li>
+		<li><a href="#gvp_graph">Graph 1</a></li>
+   	<li><a href="#nvp_graph">Graph 2</a></li>
+   	<li><a href="#rvp_graph">Graph 3</a></li>
+	</ul>
+</nav>
+
+<article>
+	<h2 id="WeeklyRev">Weekly Revenue Calculator</h2>
+	<p>
+		Latitude:<input type="text" name="Latitude" id="weeklyLat"> </br>
+		Longitude:<input type="text" name="Longitude" id="weeklyLong"> </br>
+		<button onclick="calcWeekRev()">Calculate</button>
+	</p>
+	<p id = "weeklyDecision"></p>
+	<h2 id="IdealPrice">Ideal Price Per Night Calculator</h2>
+	<p>
+		Latitude:<input type="text" name="Latitude" id="idealLat"> </br>
+		Longitude:<input type="text" name="Longitude" id="idealLong"> </br>
+		<button onclick="calcWeekRev()">Calculate</button>
+	</p>
+	<p id = "idealDecision"></p>
+	<h2>Graph 1</h2>
+	<img src="PreProcessing/gvp_graph.jpg" alt="Graph of Geological Location vs Price per Person" id="gvp_graph">
+	<h2>Graph 2</h2>
+	<img src="PreProcessing/nvp_graph.jpg" alt="Cost of Airbnb Based On Neighborhoods" id="nvp_graph">
+	<h2>Graph 3</h2>
+	<img src="PreProcessing/rvp_graph.jpg" alt="Cost of a Listing vs the Rating it Recieves" id="rvp_graph">
+</article>
+</body>
+</html>
