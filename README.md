@@ -11,5 +11,5 @@ and wrote it out in a small csv data. I was also able to use MATLAB to generate 
 graphs needed.
 
 The second part cosisted of generating the web application where I used html and Javascript.
-I loaded in the preprocessed data and wrote function to calculate the two statistics asked of 
-me.
+I loaded in the preprocessed data and converted it into 2D arrays through the use of PapaParse 
+and wrote functions to calculate the two statistics asked of  me.
